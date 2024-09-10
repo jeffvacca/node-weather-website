@@ -6,12 +6,13 @@ const forecast = (lat, long, callback) => {
     const url = `http://api.weatherstack.com/current?access_key=${accessKey}&query=${query}&units=f`;
     request({ url, json: true }, (error, response) => {
         const {current, error:responseError} = response.body;
+        console.log(current);
         if (error) {
             callback('Unable to connect to weather service.', undefined);
         } else if (responseError) {
             callback('Unable to find location. Try another search.', undefined);
         } else {
-            callback(undefined, `${current.weather_descriptions[0]}. It is currently ${current.temperature} degrees out.  It feels like ${current.feelslike} degrees out.`);
+            callback(undefined, `${current.weather_descriptions[0]}. It is currently ${current.temperature} degrees out.  It feels like ${current.feelslike} degrees out. The humidity is ${current.humidity}%.`);
         }
     })
 }
